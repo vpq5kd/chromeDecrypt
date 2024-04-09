@@ -25,7 +25,6 @@ def get_secret_key():
 
         #Remove suffix DPAPI
         secret_key = secret_key[5:]
-        print(secret_key)
         secret_key = win32crypt.CryptUnprotectData(secret_key, None, None, None, 0)[1]
         return secret_key
     except Exception as e:
@@ -34,14 +33,15 @@ def get_secret_key():
         return None
 
 secretKey = get_secret_key()
-print(secretKey)
+
 for index,login in enumerate(cursor.fetchall()):
     url = login[0]
     username = login[1]
     ciphertext= login[2]
-    print("Url:",url)
-    print("Username",username)
-    print("Cipher Text",ciphertext)
+    if (url):
+        print("Url: ",url)
+    if (username):
+        print("Username: ",username)
     # Step 1: Extracting initilisation vector from ciphertext
     initialisation_vector = ciphertext[3:15]
     # Step 2: Extracting encrypted password from ciphertext
@@ -51,4 +51,7 @@ for index,login in enumerate(cursor.fetchall()):
     decrypted_pass = cipher.decrypt(encrypted_password)
     decrypted_pass = decrypted_pass.decode()
     # Step 4: Decrypted Password
-    print(decrypted_pass)
+    if (decrypted_pass):
+        print(f"password: {decrypted_pass}")
+    if(url or username or decrypted_pass):
+        print("-----------------------")
